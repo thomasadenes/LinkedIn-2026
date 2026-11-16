@@ -121,7 +121,7 @@
   document.addEventListener("keydown",event=>{if(event.key==="Escape")togglePeriod(false)});
   function markPreset(value){document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("selected",b.dataset.period===value));}
   document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{
-    if(b.dataset.period==="all"){fromInput.value="2024-01-01";toInput.value="2026-10-31";}
+    if(b.dataset.period==="all"){fromInput.value="2023-01-01";toInput.value="2026-10-31";}
     else if(b.dataset.period==="year"){fromInput.value="2026-01-01";toInput.value="2026-10-31";}
     else if(b.dataset.period==="quarter"){fromInput.value="2026-08-01";toInput.value="2026-10-31";}
     markPreset(b.dataset.period);
@@ -164,4 +164,5 @@
       button.innerHTML='Déverrouiller <span>→</span>';
     }
   });
+  window.KPI_APP_READY = true;
 })();
