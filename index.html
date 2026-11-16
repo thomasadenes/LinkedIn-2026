@@ -12,6 +12,21 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+  <section class="lock-screen" id="lock-screen" aria-labelledby="lock-title">
+    <div class="lock-card">
+      <div class="lock-mark">in</div>
+      <div class="eyebrow">ESPACE PRIVÉ · KPI 2026</div>
+      <h1 id="lock-title">Accès au tableau de bord</h1>
+      <p>Entre le mot de passe pour déverrouiller les données du tableau de bord.</p>
+      <form id="unlock-form">
+        <label for="dashboard-password">Mot de passe</label>
+        <input id="dashboard-password" type="password" autocomplete="current-password" required>
+        <button type="submit" id="unlock-button">Déverrouiller <span>→</span></button>
+      </form>
+      <p class="lock-message" id="lock-message" role="status" aria-live="polite"></p>
+      <small>Les données chiffrées sont déverrouillées localement dans ton navigateur.</small>
+    </div>
+  </section>
   <header class="topbar">
     <a class="brand" href="#overview" aria-label="Accueil KPI 2026">
       <span class="brand-mark">in</span><span>LINKEDIN <b>2026</b></span>
