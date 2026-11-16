@@ -88,6 +88,15 @@
     animatedNumbers();
     requestAnimationFrame(()=>document.querySelectorAll(".bar-fill").forEach(el=>el.classList.add("grown")));
   }
+  function refresh() {
+    if (!activeData) return;
+    const valid = fromInput.value <= toInput.value;
+    fromInput.setCustomValidity(valid ? "" : "La date de début doit précéder la date de fin.");
+    toInput.setCustomValidity(valid ? "" : "La date de fin doit suivre la date de début.");
+    if (valid) render(activeData);
+  }
+  fromInput.addEventListener("change", refresh);
+  toInput.addEventListener("change", refresh);
   form.addEventListener("submit", async event => {
     event.preventDefault();
     const password=input.value;
