@@ -115,3 +115,53 @@ body.unlocked .lock-screen{display:none}
 @media(max-width:900px){.topbar nav{display:none}.header-filters{margin-left:auto}}
 @media(max-width:650px){.topbar{height:auto;min-height:75px;flex-wrap:wrap;padding:10px 5vw}.header-filters{order:2;width:100%;margin-left:0}.header-filters>.period-picker{flex:1;min-width:0}.page-picker .period-trigger,.period-trigger{min-width:0;width:100%;gap:7px}.period-trigger-text strong{white-space:normal}.period-panel{right:auto;left:0}.header-filters>.period-picker:last-child .period-panel{right:0;left:auto}.panel{padding-top:145px}.analysis-metrics{grid-template-columns:1fr 1fr}.analysis-insights,.competitor-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.analysis-metrics{grid-template-columns:1fr}.period-trigger-text strong{font-size:9px}}
+
+/* Correctif en-tête : les deux filtres restent sur une seule rangée */
+.topbar{min-height:78px;height:auto;display:flex;flex-wrap:nowrap;gap:14px;padding-top:8px;padding-bottom:8px}
+.topbar .brand{flex:0 0 auto}
+.topbar nav{flex:1 1 auto;min-width:0;gap:clamp(9px,1.3vw,20px);justify-content:center}
+.topbar nav a{white-space:nowrap}
+.header-filters{display:flex;flex:0 1 auto;flex-wrap:nowrap;min-width:0;max-width:100%;gap:8px}
+.header-filters>.period-picker{flex:1 1 0;min-width:0}
+.header-filters .period-trigger,.page-picker .period-trigger{min-width:0!important;width:100%;min-height:54px;padding:8px 10px}
+.header-filters .period-trigger-icon{flex:0 0 30px;width:30px;height:30px}
+.header-filters .period-trigger-text{min-width:0;flex:1 1 auto}
+.header-filters .period-trigger-text strong{white-space:normal;overflow-wrap:anywhere;line-height:1.25}
+.header-filters .period-chevron{flex:0 0 auto;margin-left:0}
+@media(max-width:1250px){
+ .topbar nav{display:none}
+ .header-filters{margin-left:auto;flex:0 1 465px}
+}
+@media(max-width:650px){
+ .topbar{height:auto;min-height:113px;flex-wrap:wrap;align-content:center;padding:8px 4vw;gap:7px}
+ .topbar .brand{width:100%;justify-content:flex-start}
+ .header-filters{order:2;flex:1 1 100%;width:100%;margin-left:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+ .header-filters>.period-picker{min-width:0}
+ .header-filters .period-trigger{min-height:49px;padding:7px 8px}
+ .header-filters .period-trigger-text small{font-size:8px;letter-spacing:.07em}
+ .header-filters .period-trigger-text strong{font-size:10px}
+ .header-filters .period-trigger-icon{display:none}
+ .header-filters .period-panel{top:calc(100% + 8px);width:min(350px,calc(100vw - 20px))}
+ .header-filters .page-picker .period-panel{left:0;right:auto}
+ .header-filters #period-picker .period-panel{right:0;left:auto}
+ .panel{padding-top:155px}
+}
+.analysis-visuals{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-top:22px}
+.analysis-chart-panel{padding:24px;border:1px solid rgba(155,193,237,.22);border-radius:16px;background:rgba(255,255,255,.055);min-width:0}
+.analysis-chart-panel h3{font-size:18px;margin:0 0 5px}
+.analysis-chart-panel>p{color:#b9c9dd;font-size:11px;line-height:1.6;margin:0 0 18px}
+.trend-chart{display:flex;align-items:flex-end;gap:4px;height:195px;overflow-x:auto;padding:4px 0 26px;border-bottom:1px solid rgba(255,255,255,.14)}
+.trend-col{min-width:12px;flex:1 0 12px;max-width:26px;height:100%;display:flex;align-items:flex-end;position:relative}
+.trend-bar{width:100%;min-height:2px;height:var(--bar-height);border-radius:3px 3px 0 0;background:linear-gradient(#82c6ff,#2471bb);transition:height .7s ease}
+.trend-col>span{position:absolute;bottom:-23px;left:50%;transform:translateX(-50%) rotate(-38deg);transform-origin:top left;font-size:8px;color:#abc2de;white-space:nowrap}
+.analysis-page-bars .bar-line{grid-template-columns:minmax(85px,120px) 1fr 78px;font-size:11px;gap:8px;margin:12px 0}
+.analysis-page-bars .bar-line strong{color:#d7e9ff}
+.analysis-page-bars .bar-track{background:#294360}
+.analysis-page-bars .bar-fill{background:linear-gradient(90deg,#2478c4,#81c4ff)}
+.competitor-count{display:block;font-size:28px;color:#184d85;letter-spacing:-.04em;margin:14px 0}
+.competitor-count small{font-size:12px;font-weight:500;color:#6783a3}
+.competitor-card a{font-size:12px;color:#0b68b8;display:inline-block;margin-top:6px}
+.competitive-insight{margin-top:20px;padding:23px;border:1px solid #dbe4ef;border-radius:14px;background:#e8eef6}
+.competitive-insight h3{margin:0 0 9px;font-size:17px}
+.competitive-insight p{font-size:13px;line-height:1.7;color:#4d5e73;margin:0}
+@media(max-width:800px){.analysis-visuals{grid-template-columns:1fr}}
