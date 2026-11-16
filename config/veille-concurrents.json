@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "description": "Liste des pages publiques à suivre. Aucune collecte LinkedIn automatisée n'est encore activée. Respecter les accès autorisés et les CGU.",
+  "competitors": [
+    {
+      "name": "Alkera",
+      "url": "https://fr.linkedin.com/company/groupe-alkera",
+      "category": "expertise_sinistres"
+    },
+    {
+      "name": "Saretec Group",
+      "url": "https://fr.linkedin.com/company/saretec-france",
+      "category": "expertise_sinistres"
+    },
+    {
+      "name": "Groupe Lang & Associés",
+      "url": "https://fr.linkedin.com/company/groupe-lang-et-associes",
+      "category": "expertise_automobile"
+    },
+    {
+      "name": "Union d'Experts",
+      "url": "https://fr.linkedin.com/company/uniondexperts",
+      "category": "expertise_sinistres"
+    },
+    {
+      "name": "Kereis Expertises",
+      "url": "https://fr.linkedin.com/company/kereisexpertises",
+      "category": "conseil_assurances_patrimoine"
+    },
+    {
+      "name": "Expertises Galtier",
+      "url": "https://fr.linkedin.com/company/expertises-galtier",
+      "category": "expertise_evaluation"
+    },
+    {
+      "name": "Stelliant",
+      "url": "https://fr.linkedin.com/company/stelliant",
+      "category": "expertise_sinistres"
+    }
+  ]
+}
