@@ -9,7 +9,8 @@ if (password.length < 12) throw new Error("DASHBOARD_PASSWORD doit contenir au m
 const API = "https://api.notion.com/v1";
 const SOURCES = {
   posts: "2b685b85-3c98-819a-a4c8-000be1ab0080",
-  followers: "2ed85b85-3c98-8061-84bb-000b072914e0"
+  followers: "2ed85b85-3c98-8061-84bb-000b072914e0",
+  historical: "41a85b85-3c98-81b4-9e75-000b132c0654"
 };
 const START = "2026-01-01";
 const END_EXCLUSIVE = "2026-11-01";
@@ -65,17 +66,18 @@ const dateFilter = property => ({
   ]
 });
 
-const [postRows, followerRows] = await Promise.all([
+const [postRows, followerRows, historicalRows] = await Promise.all([
   queryAll(SOURCES.posts, {
     and: [
       { property: "Statut", status: { equals: "Publié" } },
       ...dateFilter("Date de publication").and
     ]
   }),
-  queryAll(SOURCES.followers, dateFilter("Date de données"))
+  queryAll(SOURCES.followers, dateFilter("Date de données")),
+  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2024-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]})
 ]);
 
-const posts = postRows.map(p => ({
+const posts2026 = postRows.map(p => ({
   id: p.id,
   title: get(p, "Nom"),
   page: get(p, "Page"),
@@ -94,6 +96,27 @@ const posts = postRows.map(p => ({
   notionUrl: p.url
 })).filter(p => inRange(p.date)).sort((a,b) => a.date.localeCompare(b.date));
 
+const historicalPosts = historicalRows.map(p => ({
+  id: p.id,
+  title: get(p, "Publication"),
+  page: get(p, "Page regroupée") || get(p, "Page historique"),
+  originalPage: get(p, "Page historique"),
+  date: dateOnly(get(p, "Date de publication")),
+  format: get(p, "Format"),
+  impressions: get(p, "Impressions"),
+  clicks: get(p, "Clics"),
+  ctr: get(p, "CTR"),
+  reactions: get(p, "Réactions"),
+  comments: get(p, "Commentaires"),
+  shares: get(p, "Repartages"),
+  engagementRate: get(p, "Taux d engagement"),
+  videoViews: get(p, "Vues"),
+  sourceFile: get(p, "Fichier source"),
+  url: null,
+  notionUrl: p.url
+})).filter(p => p.date >= "2024-01-01" && p.date < "2026-01-01");
+const posts = [...historicalPosts, ...posts2026].sort((a,b) => a.date.localeCompare(b.date));
+
 const followers = followerRows.map(p => ({
   id: p.id,
   page: get(p, "Page"),
@@ -106,11 +129,11 @@ if (!posts.length && !followers.length) {
   throw new Error("Aucune donnée trouvée : synchronisation annulée pour ne pas remplacer un export valide.");
 }
 const data = {
-  period: { from: START, to: "2026-10-31" },
+  period: { from: "2024-01-01", to: "2026-10-31" },
   syncedAt: new Date().toISOString(),
   posts,
   followers,
-  pageAliases: { "ADENES Fr": "ADENES France" },
+  pageAliases: { "ADENES Fr": "ADENES France", "CREATIV’": "ROADIA", "CREATIV\u0027": "ROADIA" },
   note: "Ne pas fusionner Adenes Monde et BATIFIVE sans validation."
 };
 
