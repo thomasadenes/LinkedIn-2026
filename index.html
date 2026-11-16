@@ -33,12 +33,12 @@
     </a>
     <nav aria-label="Navigation principale">
       <a href="#overview">Vue d'ensemble</a><a href="#communities">Communautés</a>
-      <a href="#content">Contenus</a><a href="#top-posts">Publications</a>
+      <a href="#content">Contenus</a><a href="#top-posts">Publications</a><a href="#analysis">Analyse</a><a href="#competition">Concurrence</a>
     </nav>
-    <div class="period-picker" id="period-picker">
+    <div class="header-filters"><div class="page-picker period-picker" id="page-picker"><button class="period-trigger" type="button" id="page-trigger" aria-controls="page-panel" aria-expanded="false"><span class="period-trigger-icon" aria-hidden="true">◈</span><span class="period-trigger-text"><small>PAGES À ANALYSER</small><strong id="page-current">Toutes les pages</strong></span><span class="period-chevron" aria-hidden="true">⌄</span></button><div class="period-panel" id="page-panel" hidden><div class="period-panel-header"><span>SÉLECTIONNER LES PAGES</span><button type="button" id="page-close" aria-label="Fermer la sélection de pages">×</button></div><div class="page-presets"><button type="button" id="page-select-all">Tout sélectionner</button><button type="button" id="page-select-none">Tout désélectionner</button></div><div class="page-options" id="page-options" role="group" aria-label="Pages LinkedIn"></div><p id="page-error" class="period-error" role="status"></p><button type="button" class="period-apply" id="page-apply">Appliquer la sélection <span>→</span></button></div></div><div class="period-picker" id="period-picker">
   <button class="period-trigger" type="button" id="period-trigger" aria-controls="period-panel" aria-expanded="false">
     <span class="period-trigger-icon" aria-hidden="true">▦</span>
-    <span class="period-trigger-text"><small>PÉRIODE D’ANALYSE</small><strong id="period-current">01 janv. — 31 oct. 2026</strong></span>
+    <span class="period-trigger-text"><small>PÉRIODE D’ANALYSE</small><strong id="period-current">01 janv. — aujourd’hui</strong></span>
     <span class="period-chevron" aria-hidden="true">⌄</span>
   </button>
   <div class="period-panel" id="period-panel" hidden>
@@ -46,21 +46,21 @@
     <div class="period-presets" role="group" aria-label="Périodes rapides">
       <button type="button" data-period="all" class="selected">Toute la période (2022–2026)</button>
       <button type="button" data-period="year">2026</button>
-      <button type="button" data-period="quarter">Août à octobre 2026</button>
+      <button type="button" data-period="quarter">90 derniers jours</button>
     </div>
-    <div class="period-fields"><label>DATE DE DÉBUT<input type="date" id="date-from" value="2026-01-01" min="2022-03-01" max="2026-10-31"></label><label>DATE DE FIN<input type="date" id="date-to" value="2026-10-31" min="2022-03-01" max="2026-10-31"></label></div>
+    <div class="period-fields"><label>DATE DE DÉBUT<input type="date" id="date-from" value="2026-01-01" min="2022-03-01"></label><label>DATE DE FIN<input type="date" id="date-to" value="2026-11-16" min="2022-03-01"></label></div>
     <p id="period-error" class="period-error" role="status" aria-live="polite"></p>
     <button id="period-apply" type="button" class="period-apply">Appliquer la période <span>→</span></button>
-    <p class="period-hint">Publications : mars 2022–octobre 2026 · Abonnés : dès février 2024. Certaines valeurs sont reprises dans plusieurs bilans mensuels.</p>
+    <p class="period-hint">Jusqu’à aujourd’hui, dans la limite des données réellement renseignées dans Notion. Les relevés anciens sont associés à leur mois de reporting.</p>
   </div>
-</div>
+</div></div>
   </header>
   <main>
     <section class="panel hero" id="overview">
       <div class="eyebrow">SOCIAL MEDIA PERFORMANCE · 2026</div>
       <h1>La performance<br><span>en perspective.</span></h1>
       <p class="intro">Un tableau de bord consolidé pour comprendre l'évolution des communautés et identifier les contenus qui créent le plus d'impact.</p>
-      <div class="hero-meta"><span class="status-dot"></span><span>Données synchronisées avec Notion · 01/01 — 31/10/2026</span></div>
+      <div class="hero-meta"><span class="status-dot"></span><span>Données Notion · mise à jour automatique · période personnalisable</span></div>
       <div id="overview-kpis" class="kpi-grid" aria-live="polite"></div><a class="scroll-cue" href="#communities">DÉCOUVRIR LES INDICATEURS <span>↓</span></a>
     </section>
     <section class="panel light" id="communities">
@@ -72,9 +72,23 @@
     <section class="panel light" id="top-posts">
       <div class="section-head"><div><div class="eyebrow">03 / PUBLICATIONS</div><h2>Top 10 &amp; Flop 10</h2></div><p>Mettre en regard les résultats chiffrés et les contenus réellement publiés.</p></div>
       <div class="ranking-tabs" role="group" aria-label="Classement"><button type="button" id="top-tab" class="active">Top 10</button><button type="button" id="flop-tab">Flop 10</button></div><p class="data-note">Classement par impressions disponibles ; les publications sans impressions sont exclues. Les visuels sont affichés uniquement lorsqu’une URL d’image exploitable est disponible.</p><div id="ranking-list" class="ranking-grid"></div></section>
+    <section class="panel navy" id="analysis">
+      <div class="section-head"><div><div class="eyebrow">04 / DÉCRYPTAGE</div><h2>Ce que disent vraiment les chiffres.</h2></div><p>Une lecture analytique fondée sur la période et les pages sélectionnées, avec les limites des données explicitement signalées.</p></div>
+      <div class="analysis-metrics" id="analysis-metrics" aria-live="polite"></div>
+      <div class="analysis-insights" id="analysis-insights"></div>
+    </section>
+    <section class="panel light" id="competition">
+      <div class="section-head"><div><div class="eyebrow">05 / BENCHMARK LINKEDIN</div><h2>Observer la concurrence.</h2></div><p>Préparer un benchmark cohérent à périmètre et période comparables.</p></div>
+      <div class="competitor-grid">
+        <article class="competitor-card"><span class="competitor-mark">01</span><h3>Alkera</h3><p>Évolution de l’audience, fréquence, formats et prises de parole à suivre.</p><span class="competitor-status">Données non connectées</span></article>
+        <article class="competitor-card"><span class="competitor-mark">02</span><h3>Saretec</h3><p>Mêmes critères d’observation pour garantir une comparaison pertinente.</p><span class="competitor-status">Données non connectées</span></article>
+        <article class="competitor-card competitor-next"><span class="competitor-mark">+</span><h3>Autres acteurs</h3><p>Ajout d’entreprises, benchmark par page, temporalité et typologie de contenu.</p><span class="competitor-status">À enrichir ensemble</span></article>
+      </div>
+      <p class="data-note">Cette section ne présente pas de statistiques concurrentes non vérifiées. Elle est prête à accueillir des données publiques vérifiables ou des relevés enregistrés dans Notion.</p>
+    </section>
   </main>
   <footer><span>LINKEDIN 2026 · KPI DASHBOARD</span><span>Source : Notion · Période personnalisable · historique 2022–2026</span></footer>
-  <script src="./app.js?v=20261116-fix5" defer></script>
+  <script src="./app.js?v=20261116-filters-analysis" defer></script>
   <script>window.addEventListener("load",()=>{if(!window.KPI_APP_READY){const m=document.getElementById("lock-message");if(m)m.textContent="Le script du tableau de bord n’a pas été chargé. Actualise la page (Ctrl+F5).";}});</script>
 </body>
 </html>
