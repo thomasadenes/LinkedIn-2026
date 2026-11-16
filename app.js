@@ -67,8 +67,8 @@
     }).sort((a,b)=>b.last.count-a.last.count);
     document.querySelector("#follower-table tbody").innerHTML = rows.map(r=>'<tr><th>'+escapeHTML(r.page)+'</th><td>'+date(r.first.date)+'</td><td>'+date(r.last.date)+'</td><td>'+fmt(r.first.count)+'</td><td>'+fmt(r.last.count)+'</td><td class="'+(r.delta>=0?"positive":"negative")+'">'+(r.delta>0?"+":"")+fmt(r.delta)+'</td><td>'+(r.rate===null?"—":pct.format(r.rate))+'</td></tr>').join("");
     document.getElementById("follower-summary").textContent = rows.length
-      ? rows.length+" pages suivies · dates des premiers et derniers relevés affichées dans le tableau."
-      : "Aucun relevé d'abonnés pour cette période. Les relevés actuellement disponibles dans Notion commencent le 19 janvier 2026.";
+      ? rows.length+" pages suivies · période de reporting par mois en 2024–2025, dates des relevés historiques conservées dans Notion."
+      : "Aucun relevé d'abonnés pour cette période. Les relevés actuellement disponibles dans Notion commencent en février 2024.";
     const maxCount = Math.max(1,...rows.map(r=>Number(r.last.count)));
     document.getElementById("follower-chart").innerHTML = rows.length ? '<h3>Dernier nombre d’abonnés connu par page</h3>'+rows.map(r=>'<div class="bar-line"><span>'+escapeHTML(r.page)+'</span><div class="bar-track"><div class="bar-fill" style="--bar-width:'+Math.round(100*r.last.count/maxCount)+'%"></div></div><strong>'+fmt(r.last.count)+'</strong></div>').join("") : "";
     const formats = ["Carrousel","Repartage","Vidéo","Image","Texte","Sondage"];
@@ -123,7 +123,7 @@
   document.addEventListener("keydown",event=>{if(event.key==="Escape")togglePeriod(false)});
   function markPreset(value){document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("selected",b.dataset.period===value));}
   document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{
-    if(b.dataset.period==="all"){fromInput.value="2023-01-01";toInput.value="2026-10-31";}
+    if(b.dataset.period==="all"){fromInput.value="2022-03-01";toInput.value="2026-10-31";}
     else if(b.dataset.period==="year"){fromInput.value="2026-01-01";toInput.value="2026-10-31";}
     else if(b.dataset.period==="quarter"){fromInput.value="2026-08-01";toInput.value="2026-10-31";}
     markPreset(b.dataset.period);
