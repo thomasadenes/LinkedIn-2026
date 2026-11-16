@@ -66,9 +66,11 @@
       return {page,first,last,delta:last.count-first.count,rate:first.count ? (last.count-first.count)/first.count : null};
     }).sort((a,b)=>b.last.count-a.last.count);
     document.querySelector("#follower-table tbody").innerHTML = rows.map(r=>'<tr><th>'+escapeHTML(r.page)+'</th><td>'+date(r.first.date)+'</td><td>'+date(r.last.date)+'</td><td>'+fmt(r.first.count)+'</td><td>'+fmt(r.last.count)+'</td><td class="'+(r.delta>=0?"positive":"negative")+'">'+(r.delta>0?"+":"")+fmt(r.delta)+'</td><td>'+(r.rate===null?"—":pct.format(r.rate))+'</td></tr>').join("");
-    document.getElementById("follower-summary").textContent = rows.length+' pages suivies · relevés datés individuellement, sans supposer un relevé au 31 octobre.';
+    document.getElementById("follower-summary").textContent = rows.length
+      ? rows.length+" pages suivies · dates des premiers et derniers relevés affichées dans le tableau."
+      : "Aucun relevé d'abonnés pour cette période. Les relevés actuellement disponibles dans Notion commencent le 19 janvier 2026.";
     const maxCount = Math.max(1,...rows.map(r=>Number(r.last.count)));
-    document.getElementById("follower-chart").innerHTML = '<h3>Dernier nombre d’abonnés connu par page</h3>'+rows.map(r=>'<div class="bar-line"><span>'+escapeHTML(r.page)+'</span><div class="bar-track"><div class="bar-fill" style="--bar-width:'+Math.round(100*r.last.count/maxCount)+'%"></div></div><strong>'+fmt(r.last.count)+'</strong></div>').join("");
+    document.getElementById("follower-chart").innerHTML = rows.length ? '<h3>Dernier nombre d’abonnés connu par page</h3>'+rows.map(r=>'<div class="bar-line"><span>'+escapeHTML(r.page)+'</span><div class="bar-track"><div class="bar-fill" style="--bar-width:'+Math.round(100*r.last.count/maxCount)+'%"></div></div><strong>'+fmt(r.last.count)+'</strong></div>').join("") : "";
     const formats = ["Carrousel","Repartage","Vidéo","Image","Texte","Sondage"];
     document.getElementById("format-grid").innerHTML = formats.map(f=>{
       const items=posts.filter(p=>p.format===f);
