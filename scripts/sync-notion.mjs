@@ -58,6 +58,14 @@ const plain = value => {
 };
 const get = (p, key) => plain(field(p, key));
 const dateOnly = value => typeof value === "string" ? value.slice(0, 10) : null;
+const canonicalPage = name => ({
+  "ADENES": "ADENES FRANCE",
+  "ADENES Fr": "ADENES FRANCE",
+  "ADENES France": "ADENES FRANCE",
+  "CREATIV'": "ROADIA",
+  "CREATIV’": "ROADIA",
+  "B5": "BATIFIVE"
+})[name] || name;
 const inRange = value => !!value && value >= START && value < END_EXCLUSIVE;
 const dateFilter = property => ({
   and: [
@@ -74,13 +82,13 @@ const [postRows, followerRows, historicalRows] = await Promise.all([
     ]
   }),
   queryAll(SOURCES.followers, dateFilter("Date de données")),
-  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2024-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]}).catch(error => { console.warn("Archive historique non accessible : partage de la base requis.", error.message); return []; })
+  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2023-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]}).catch(error => { console.warn("Archive historique non accessible : partage de la base requis.", error.message); return []; })
 ]);
 
 const posts2026 = postRows.map(p => ({
   id: p.id,
   title: get(p, "Nom"),
-  page: get(p, "Page"),
+  page: canonicalPage(get(p, "Page")),
   date: dateOnly(get(p, "Date de publication")),
   format: get(p, "Format"),
   impressions: get(p, "Impressions"),
@@ -99,7 +107,7 @@ const posts2026 = postRows.map(p => ({
 const historicalPosts = historicalRows.map(p => ({
   id: p.id,
   title: get(p, "Publication"),
-  page: get(p, "Page regroupée") || get(p, "Page historique"),
+  page: canonicalPage(get(p, "Page regroupée") || get(p, "Page historique")),
   originalPage: get(p, "Page historique"),
   date: dateOnly(get(p, "Date de publication")),
   format: ({ "Visuel": "Image", "VIdéo": "Vidéo" })[get(p, "Format")] || get(p, "Format"),
@@ -115,7 +123,7 @@ const historicalPosts = historicalRows.map(p => ({
   sourceFile: get(p, "Fichier source"),
   url: null,
   notionUrl: p.url
-})).filter(p => p.date >= "2024-01-01" && p.date < "2026-01-01");
+})).filter(p => p.date >= "2023-01-01" && p.date < "2026-01-01");
 const posts = [...historicalPosts, ...posts2026].sort((a,b) => a.date.localeCompare(b.date));
 
 const followers = followerRows.map(p => ({
@@ -130,11 +138,11 @@ if (!posts.length && !followers.length) {
   throw new Error("Aucune donnée trouvée : synchronisation annulée pour ne pas remplacer un export valide.");
 }
 const data = {
-  period: { from: "2024-01-01", to: "2026-10-31" },
+  period: { from: "2023-01-01", to: "2026-10-31" },
   syncedAt: new Date().toISOString(),
   posts,
   followers,
-  pageAliases: { "ADENES Fr": "ADENES France", "CREATIV’": "ROADIA", "CREATIV\u0027": "ROADIA" },
+  pageAliases: { "ADENES": "ADENES FRANCE", "ADENES Fr": "ADENES FRANCE", "CREATIV’": "ROADIA", "CREATIV\u0027": "ROADIA", "B5": "BATIFIVE" },
   note: "Ne pas fusionner Adenes Monde et BATIFIVE sans validation."
 };
 
