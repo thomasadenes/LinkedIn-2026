@@ -82,7 +82,7 @@ const [postRows, followerRows, historicalRows] = await Promise.all([
     ]
   }),
   queryAll(SOURCES.followers, dateFilter("Date de données")),
-  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2023-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]}).catch(error => { console.warn("Archive historique non accessible : partage de la base requis.", error.message); return []; })
+  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2023-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]})
 ]);
 
 const posts2026 = postRows.map(p => ({
@@ -163,3 +163,5 @@ await writeFile("data.enc.json", JSON.stringify({
   ciphertext: ciphertext.toString("base64")
 }) + "\n");
 console.log(`Export chiffré créé : ${posts.length} publications, ${followers.length} relevés d'abonnés.`);
+
+// Les archives historiques sont obligatoires : un échec de lecture bloque désormais la publication.
