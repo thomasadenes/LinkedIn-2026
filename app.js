@@ -33,9 +33,17 @@
     }),{threshold:.15});
     document.querySelectorAll("[data-count]").forEach(el=>observer.observe(el));
   }
+  let activeData = null;
+  const fromInput = document.getElementById("date-from");
+  const toInput = document.getElementById("date-to");
+  if (!form || !input || !button || !message || !fromInput || !toInput) {
+    console.error("Composant obligatoire absent de la page KPI.");
+    return;
+  }
   function render(data) {
-    const posts = Array.isArray(data.posts) ? data.posts : [];
-    const snapshots = Array.isArray(data.followers) ? data.followers : [];
+    const within = row => typeof row?.date === "string" && row.date >= fromInput.value && row.date <= toInput.value;
+    const posts = (Array.isArray(data.posts) ? data.posts : []).filter(within);
+    const snapshots = (Array.isArray(data.followers) ? data.followers : []).filter(within);
     const valid = posts.filter(p=>p.impressions !== null && Number.isFinite(Number(p.impressions)));
     const pages = [...new Set([...posts.map(p=>p.page),...snapshots.map(p=>p.page)].filter(Boolean))];
     const totalImpressions = valid.reduce((n,p)=>n+Number(p.impressions),0);
@@ -82,8 +90,8 @@
         return '<article class="rank-card"><span class="rank-index">'+String(index+1).padStart(2,"0")+'</span><div><span class="rank-meta">'+escapeHTML(p.page||"Page non renseignée")+' · '+date(p.date)+' · '+escapeHTML(p.format||"Format inconnu")+'</span><h3>'+escapeHTML(p.title||"Publication sans titre")+'</h3><p>'+fmt(p.impressions)+' impressions · '+fmt(p.reactions)+' réactions · '+fmt(p.comments)+' commentaires</p>'+safeLink+'</div></article>';
       }).join("") || '<p>Aucune publication avec impressions renseignées.</p>';
     }
-    top.addEventListener("click",()=>showRanking("top"));
-    flop.addEventListener("click",()=>showRanking("flop"));
+    top.onclick=()=>showRanking("top");
+    flop.onclick=()=>showRanking("flop");
     showRanking("top");
     animatedNumbers();
     requestAnimationFrame(()=>document.querySelectorAll(".bar-fill").forEach(el=>el.classList.add("grown")));
@@ -138,12 +146,18 @@
       const response=await fetch("./data.enc.json",{cache:"no-store"});
       if(!response.ok)throw new Error("Données chiffrées non disponibles.");
       const data=await decryptDashboard(password,await response.json());
-      render(data);
+      activeData = data;
       window.KPI_DASHBOARD_DATA=data;
       document.body.classList.add("unlocked");
+      try { render(data); }
+      catch (renderError) {
+        console.error("Affichage KPI incomplet", renderError);
+        const fallback = document.getElementById("follower-summary");
+        if (fallback) fallback.textContent = "Données déchiffrées. Une visualisation n'a pas pu être chargée.";
+      }
       input.value="";
     }catch(error){
-      console.error("Déverrouillage impossible",error.name);
+      console.error("Déverrouillage impossible",error);
       message.textContent=error.name==="OperationError"?"Mot de passe incorrect.":(error.message||"Impossible de charger le tableau de bord.");
     }finally{
       button.disabled=false;
