@@ -13,6 +13,8 @@ const SOURCES = {
   historical: "41a85b85-3c98-81b4-9e75-000b132c0654"
 };
 const START = "2026-01-01";
+const FOLLOWERS_FROM = "2024-01-01";
+const HISTORY_FROM = "2022-01-01";
 const END_EXCLUSIVE = "2026-11-01";
 
 async function queryAll(id, filter) {
@@ -81,8 +83,8 @@ const [postRows, followerRows, historicalRows] = await Promise.all([
       ...dateFilter("Date de publication").and
     ]
   }),
-  queryAll(SOURCES.followers, dateFilter("Date de données")),
-  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2023-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]})
+  queryAll(SOURCES.followers, {and:[{property:"Date de données",date:{on_or_after:FOLLOWERS_FROM}},{property:"Date de données",date:{before:END_EXCLUSIVE}}]}),
+  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:HISTORY_FROM}},{property:"Date de publication",date:{before:"2026-01-01"}}]})
 ]);
 
 const posts2026 = postRows.map(p => ({
@@ -123,22 +125,22 @@ const historicalPosts = historicalRows.map(p => ({
   sourceFile: get(p, "Fichier source"),
   url: null,
   notionUrl: p.url
-})).filter(p => p.date >= "2023-01-01" && p.date < "2026-01-01");
+})).filter(p => p.date >= HISTORY_FROM && p.date < "2026-01-01");
 const posts = [...historicalPosts, ...posts2026].sort((a,b) => a.date.localeCompare(b.date));
 
 const followers = followerRows.map(p => ({
   id: p.id,
-  page: get(p, "Page"),
+  page: canonicalPage(get(p, "Page")),
   date: dateOnly(get(p, "Date de données")),
   count: get(p, "Abonnés")
-})).filter(p => inRange(p.date) && p.count !== null)
+})).filter(p => p.date >= FOLLOWERS_FROM && p.date < END_EXCLUSIVE && p.count !== null)
   .sort((a,b) => a.date.localeCompare(b.date));
 
 if (!posts.length && !followers.length) {
   throw new Error("Aucune donnée trouvée : synchronisation annulée pour ne pas remplacer un export valide.");
 }
 const data = {
-  period: { from: "2023-01-01", to: "2026-10-31" },
+  period: { from: "2022-01-01", to: "2026-10-31" },
   syncedAt: new Date().toISOString(),
   posts,
   followers,
