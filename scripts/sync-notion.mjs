@@ -15,7 +15,9 @@ const SOURCES = {
 const START = "2026-01-01";
 const FOLLOWERS_FROM = "2024-01-01";
 const HISTORY_FROM = "2022-01-01";
-const END_EXCLUSIVE = "2026-11-01";
+// Date limite calculée au moment de chaque synchronisation (demain exclu).
+const today = new Date().toISOString().slice(0, 10);
+const END_EXCLUSIVE = new Date(Date.parse(today + "T00:00:00Z") + 86400000).toISOString().slice(0, 10);
 
 async function queryAll(id, filter) {
   const rows = [];
@@ -140,7 +142,7 @@ if (!posts.length && !followers.length) {
   throw new Error("Aucune donnée trouvée : synchronisation annulée pour ne pas remplacer un export valide.");
 }
 const data = {
-  period: { from: "2022-01-01", to: "2026-10-31" },
+  period: { from: "2022-03-01", to: today },
   syncedAt: new Date().toISOString(),
   posts,
   followers,
