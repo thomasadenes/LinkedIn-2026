@@ -97,6 +97,35 @@
   }
   fromInput.addEventListener("change", refresh);
   toInput.addEventListener("change", refresh);
+  const periodTrigger=document.getElementById("period-trigger");
+  const periodPanel=document.getElementById("period-panel");
+  const periodCurrent=document.getElementById("period-current");
+  const periodError=document.getElementById("period-error");
+  const periodPicker=document.getElementById("period-picker");
+  const dateLabel=d=>new Date(d+"T12:00:00").toLocaleDateString("fr-FR",{day:"2-digit",month:"short",year:"numeric"});
+  function togglePeriod(open){
+    periodPanel.hidden=!open;
+    periodTrigger.setAttribute("aria-expanded",String(open));
+  }
+  periodTrigger.addEventListener("click",()=>togglePeriod(periodPanel.hidden));
+  document.getElementById("period-close").addEventListener("click",()=>togglePeriod(false));
+  document.addEventListener("click",event=>{if(!periodPicker.contains(event.target))togglePeriod(false)});
+  document.addEventListener("keydown",event=>{if(event.key==="Escape")togglePeriod(false)});
+  function markPreset(value){document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("selected",b.dataset.period===value));}
+  document.querySelectorAll("[data-period]").forEach(b=>b.addEventListener("click",()=>{
+    if(b.dataset.period==="all"||b.dataset.period==="year"){fromInput.value="2026-01-01";toInput.value="2026-10-31";}
+    else if(b.dataset.period==="quarter"){fromInput.value="2026-08-01";toInput.value="2026-10-31";}
+    markPreset(b.dataset.period);
+  }));
+  fromInput.addEventListener("change",()=>markPreset(""));
+  toInput.addEventListener("change",()=>markPreset(""));
+  document.getElementById("period-apply").addEventListener("click",()=>{
+    if(!fromInput.value||!toInput.value||fromInput.value>toInput.value){periodError.textContent="Sélectionne une période valide.";return;}
+    periodError.textContent="";
+    periodCurrent.textContent=dateLabel(fromInput.value)+" — "+dateLabel(toInput.value);
+    if(activeData)render(activeData);
+    togglePeriod(false);
+  });
   form.addEventListener("submit", async event => {
     event.preventDefault();
     const password=input.value;
