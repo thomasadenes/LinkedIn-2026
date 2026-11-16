@@ -74,7 +74,7 @@ const [postRows, followerRows, historicalRows] = await Promise.all([
     ]
   }),
   queryAll(SOURCES.followers, dateFilter("Date de données")),
-  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2024-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]})
+  queryAll(SOURCES.historical, {and:[{property:"Date de publication",date:{on_or_after:"2024-01-01"}},{property:"Date de publication",date:{before:"2026-01-01"}}]}).catch(error => { console.warn("Archive historique non accessible : partage de la base requis.", error.message); return []; })
 ]);
 
 const posts2026 = postRows.map(p => ({
