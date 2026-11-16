@@ -1,5 +1,10 @@
 name: Synchronisation Notion
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/sync-notion.mjs'
+      - '.github/workflows/sync-notion.yml'
   workflow_dispatch:
   schedule:
     - cron: '15 6 * * *'
