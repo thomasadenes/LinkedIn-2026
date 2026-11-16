@@ -44,14 +44,14 @@
   <div class="period-panel" id="period-panel" hidden>
     <div class="period-panel-header"><span>PERSONNALISER LA PÉRIODE</span><button type="button" id="period-close" aria-label="Fermer le calendrier">×</button></div>
     <div class="period-presets" role="group" aria-label="Périodes rapides">
-      <button type="button" data-period="all" class="selected">Toute la période (2024–2026)</button>
+      <button type="button" data-period="all" class="selected">Toute la période (2023–2026)</button>
       <button type="button" data-period="year">2026</button>
       <button type="button" data-period="quarter">Août à octobre 2026</button>
     </div>
-    <div class="period-fields"><label>DATE DE DÉBUT<input type="date" id="date-from" value="2026-01-01" min="2024-01-01" max="2026-10-31"></label><label>DATE DE FIN<input type="date" id="date-to" value="2026-10-31" min="2024-01-01" max="2026-10-31"></label></div>
+    <div class="period-fields"><label>DATE DE DÉBUT<input type="date" id="date-from" value="2026-01-01" min="2023-01-01" max="2026-10-31"></label><label>DATE DE FIN<input type="date" id="date-to" value="2026-10-31" min="2023-01-01" max="2026-10-31"></label></div>
     <p id="period-error" class="period-error" role="status" aria-live="polite"></p>
     <button id="period-apply" type="button" class="period-apply">Appliquer la période <span>→</span></button>
-    <p class="period-hint">Historique 2024–2025 en cours d’import depuis Notion.</p>
+    <p class="period-hint">Historique disponible depuis 2023 dans Notion ; dates d’abonnés selon relevés disponibles.</p>
   </div>
 </div>
   </header>
@@ -73,7 +73,8 @@
       <div class="section-head"><div><div class="eyebrow">03 / PUBLICATIONS</div><h2>Top 10 &amp; Flop 10</h2></div><p>Mettre en regard les résultats chiffrés et les contenus réellement publiés.</p></div>
       <div class="ranking-tabs" role="group" aria-label="Classement"><button type="button" id="top-tab" class="active">Top 10</button><button type="button" id="flop-tab">Flop 10</button></div><p class="data-note">Classement par impressions disponibles ; les publications sans impressions sont exclues. Les visuels sont affichés uniquement lorsqu’une URL d’image exploitable est disponible.</p><div id="ranking-list" class="ranking-grid"></div></section>
   </main>
-  <footer><span>LINKEDIN 2026 · KPI DASHBOARD</span><span>Source : Notion · Période personnalisable · historique 2024–2026</span></footer>
-  <script src="./app.js" defer></script>
+  <footer><span>LINKEDIN 2026 · KPI DASHBOARD</span><span>Source : Notion · Période personnalisable · historique 2023–2026</span></footer>
+  <script src="./app.js?v=20261116-fix3" defer></script>
+  <script>window.addEventListener("load",()=>{if(!window.KPI_APP_READY){const m=document.getElementById("lock-message");if(m)m.textContent="Le script du tableau de bord n’a pas été chargé. Actualise la page (Ctrl+F5).";}});</script>
 </body>
 </html>
