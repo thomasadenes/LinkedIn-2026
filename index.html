@@ -75,20 +75,21 @@
     <section class="panel navy" id="analysis">
       <div class="section-head"><div><div class="eyebrow">04 / DÉCRYPTAGE</div><h2>Ce que disent vraiment les chiffres.</h2></div><p>Une lecture analytique fondée sur la période et les pages sélectionnées, avec les limites des données explicitement signalées.</p></div>
       <div class="analysis-metrics" id="analysis-metrics" aria-live="polite"></div>
-      <div class="analysis-insights" id="analysis-insights"></div>
+      <div class="analysis-visuals"><div class="analysis-chart-panel"><h3>Évolution des impressions</h3><p>Somme mensuelle des impressions renseignées, sur les pages sélectionnées</p><div id="analysis-trend" class="trend-chart"></div></div><div class="analysis-chart-panel"><h3>Performance par page</h3><p>Impressions moyennes par publication renseignée</p><div id="analysis-pages" class="analysis-page-bars"></div></div></div><div class="analysis-insights" id="analysis-insights"></div>
     </section>
     <section class="panel light" id="competition">
       <div class="section-head"><div><div class="eyebrow">05 / BENCHMARK LINKEDIN</div><h2>Observer la concurrence.</h2></div><p>Préparer un benchmark cohérent à périmètre et période comparables.</p></div>
+      <p class="data-note">Premiers relevés publics du 16 novembre 2026, sources LinkedIn. Ces effectifs ne sont pas automatiquement actualisés et ne donnent pas accès aux impressions ou aux taux d’engagement internes des concurrents.</p>
       <div class="competitor-grid">
-        <article class="competitor-card"><span class="competitor-mark">01</span><h3>Alkera</h3><p>Évolution de l’audience, fréquence, formats et prises de parole à suivre.</p><span class="competitor-status">Données non connectées</span></article>
-        <article class="competitor-card"><span class="competitor-mark">02</span><h3>Saretec</h3><p>Mêmes critères d’observation pour garantir une comparaison pertinente.</p><span class="competitor-status">Données non connectées</span></article>
-        <article class="competitor-card competitor-next"><span class="competitor-mark">+</span><h3>Autres acteurs</h3><p>Ajout d’entreprises, benchmark par page, temporalité et typologie de contenu.</p><span class="competitor-status">À enrichir ensemble</span></article>
+        <article class="competitor-card"><span class="competitor-mark">01 / BENCHMARK PUBLIC</span><h3>Alkera</h3><strong class="competitor-count">19 078 <small>abonnés</small></strong><p>Positionnement : expertise sinistre, métiers et recrutement, mobilité interne, engagements RSE. Publications récentes autour de DuoDay, parcours collaborateurs et Octobre Rose.</p><a href="https://fr.linkedin.com/company/groupe-alkera" target="_blank" rel="noopener noreferrer">Voir la page LinkedIn ↗</a><span class="competitor-status">Source : LinkedIn · relevé ponctuel</span></article>
+        <article class="competitor-card"><span class="competitor-mark">02 / BENCHMARK PUBLIC</span><h3>Saretec Group</h3><strong class="competitor-count">21 751 <small>abonnés</small></strong><p>Positionnement : expertise sinistre, entreprise à mission, collaborateurs, prévention et risques climatiques. Publications récentes sur Novembre Bleu, mobilité interne et tempêtes.</p><a href="https://fr.linkedin.com/company/saretec-france" target="_blank" rel="noopener noreferrer">Voir la page LinkedIn ↗</a><span class="competitor-status">Source : LinkedIn · relevé ponctuel</span></article>
+        <article class="competitor-card competitor-next"><span class="competitor-mark">03 / PROCHAIN AXE</span><h3>Lecture stratégique</h3><p>Comparer les lignes éditoriales : expertise métier, marque employeur, prévention, RSE et événements. Pour comparer la performance réelle, il faudra collecter les interactions visibles et la fréquence sur des périodes comparables.</p><span class="competitor-status">Indicateurs internes non disponibles publiquement</span></article>
       </div>
-      <p class="data-note">Cette section ne présente pas de statistiques concurrentes non vérifiées. Elle est prête à accueillir des données publiques vérifiables ou des relevés enregistrés dans Notion.</p>
+      <div class="competitive-insight"><h3>Premiers enseignements</h3><p>Les deux acteurs rendent visibles à la fois leur expertise technique et leur marque employeur. Alkera met notamment en scène la mobilité et le collectif ; Saretec associe plus explicitement l’expertise aux enjeux de prévention et à son positionnement d’entreprise à mission. Cette observation qualitative porte sur les publications récentes consultables, pas sur une mesure exhaustive de leurs performances.</p></div>
     </section>
   </main>
   <footer><span>LINKEDIN 2026 · KPI DASHBOARD</span><span>Source : Notion · Période personnalisable · historique 2022–2026</span></footer>
-  <script src="./app.js?v=20261116-filters-analysis" defer></script>
+  <script src="./app.js?v=20261116-benchmark-v2" defer></script>
   <script>window.addEventListener("load",()=>{if(!window.KPI_APP_READY){const m=document.getElementById("lock-message");if(m)m.textContent="Le script du tableau de bord n’a pas été chargé. Actualise la page (Ctrl+F5).";}});</script>
 </body>
 </html>
