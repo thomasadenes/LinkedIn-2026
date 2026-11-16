@@ -35,7 +35,25 @@
       <a href="#overview">Vue d'ensemble</a><a href="#communities">Communautés</a>
       <a href="#content">Contenus</a><a href="#top-posts">Publications</a>
     </nav>
-    <div class="date-controls" aria-label="Filtrer les dates"><label>Du <input type="date" id="date-from" value="2026-01-01" min="2026-01-01" max="2026-10-31"></label><label>Au <input type="date" id="date-to" value="2026-10-31" min="2026-01-01" max="2026-10-31"></label></div>
+    <div class="period-picker" id="period-picker">
+  <button class="period-trigger" type="button" id="period-trigger" aria-controls="period-panel" aria-expanded="false">
+    <span class="period-trigger-icon" aria-hidden="true">▦</span>
+    <span class="period-trigger-text"><small>PÉRIODE D’ANALYSE</small><strong id="period-current">01 janv. — 31 oct. 2026</strong></span>
+    <span class="period-chevron" aria-hidden="true">⌄</span>
+  </button>
+  <div class="period-panel" id="period-panel" hidden>
+    <div class="period-panel-header"><span>PERSONNALISER LA PÉRIODE</span><button type="button" id="period-close" aria-label="Fermer le calendrier">×</button></div>
+    <div class="period-presets" role="group" aria-label="Périodes rapides">
+      <button type="button" data-period="all" class="selected">Toute la période</button>
+      <button type="button" data-period="year">2026</button>
+      <button type="button" data-period="quarter">3 derniers mois disponibles</button>
+    </div>
+    <div class="period-fields"><label>DATE DE DÉBUT<input type="date" id="date-from" value="2026-01-01" min="2026-01-01" max="2026-10-31"></label><label>DATE DE FIN<input type="date" id="date-to" value="2026-10-31" min="2026-01-01" max="2026-10-31"></label></div>
+    <p id="period-error" class="period-error" role="status" aria-live="polite"></p>
+    <button id="period-apply" type="button" class="period-apply">Appliquer la période <span>→</span></button>
+    <p class="period-hint">Historique disponible : janvier à octobre 2026. Les données 2024–2025 seront ajoutées après import.</p>
+  </div>
+</div>
   </header>
   <main>
     <section class="panel hero" id="overview">
