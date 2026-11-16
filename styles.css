@@ -52,3 +52,10 @@ body.unlocked .lock-screen{display:none}
 @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.format-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.ranking-grid{grid-template-columns:1fr}.bar-line{grid-template-columns:90px 1fr 65px;gap:8px;font-size:10px}.panel{justify-content:flex-start}.kpi{padding:15px}}
 @media(prefers-reduced-motion:reduce){.bar-fill{transition:none}}
+
+/* Sélection de période */
+.date-controls{display:flex;gap:10px;align-items:center;color:#c5cede;font-size:11px}
+.date-controls label{display:flex;align-items:center;gap:5px}
+.date-controls input{color-scheme:dark;color:#fff;border:1px solid #5c708b;background:#152740;border-radius:6px;padding:7px;font:inherit;width:122px}
+.date-controls input:focus-visible{outline:2px solid #83baff;outline-offset:2px}
+@media(max-width:720px){.topbar{height:auto;min-height:67px;padding-block:10px;flex-wrap:wrap}.date-controls{width:100%;justify-content:space-between}.date-controls input{width:119px}.panel{padding-top:133px}}
