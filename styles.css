@@ -8,3 +8,22 @@ nav{display:flex;gap:26px}nav a,.period{color:#c5cede;text-decoration:none;font-
 footer{display:flex;justify-content:space-between;gap:20px;padding:24px 5vw;background:#0b1526;color:#8f9cb0;font-size:10px;letter-spacing:.1em}
 @media(max-width:800px){.topbar{height:62px;padding:0 5vw}.topbar nav{display:none}.period{font-size:9px}.panel{padding:105px 7vw 65px}.section-head{display:block;margin-bottom:35px}.section-head p{margin-top:18px}.format-grid{grid-template-columns:repeat(2,1fr)}.format-grid article{min-height:160px}.format-grid h3{margin-top:28px}footer{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+/* Écran de déverrouillage : aucun contenu du tableau de bord n'est visible avant validation. */
+body:not(.unlocked) main,body:not(.unlocked) footer,body:not(.unlocked) .topbar{visibility:hidden}
+.lock-screen{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 70% 20%,#24446e 0%,transparent 42%),linear-gradient(135deg,#0b1526,#142945)}
+body.unlocked .lock-screen{display:none}
+.lock-card{width:min(100%,440px);padding:42px;border:1px solid rgba(255,255,255,.15);border-radius:20px;background:rgba(9,20,37,.76);box-shadow:0 25px 80px rgba(0,0,0,.28);backdrop-filter:blur(18px)}
+.lock-mark{display:grid;place-items:center;width:42px;height:42px;margin-bottom:32px;border-radius:9px;background:#0a66c2;color:#fff;font-size:22px;font-weight:800}
+.lock-card h1{font-size:32px;letter-spacing:-.045em;line-height:1.1;margin:0 0 14px}
+.lock-card>p{color:#bac7d8;font-size:14px;line-height:1.6}
+.lock-card form{display:grid;gap:10px;margin-top:26px}
+.lock-card label{font-size:11px;color:#d5dfec;letter-spacing:.08em}
+.lock-card input{width:100%;padding:14px 15px;border:1px solid #52647c;border-radius:9px;background:#0b1729;color:#fff;font:inherit;outline:none}
+.lock-card input:focus{border-color:#83baff;box-shadow:0 0 0 3px rgba(131,186,255,.15)}
+.lock-card button{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border:0;border-radius:9px;background:#0a66c2;color:white;font:600 14px inherit;cursor:pointer}
+.lock-card button:hover{background:#1479d4}
+.lock-card button:disabled{opacity:.6;cursor:wait}
+.lock-card .lock-message{min-height:22px;margin:14px 0 4px;color:#ffb4a9;font-size:12px}
+.lock-card small{display:block;margin-top:16px;color:#8292a9;font-size:10px;line-height:1.5}
+@media(max-width:520px){.lock-card{padding:28px 23px}.lock-card h1{font-size:27px}}
