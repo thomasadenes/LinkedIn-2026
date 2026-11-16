@@ -146,6 +146,34 @@
       ["Qualité et limites",fmt(posts.length-valid.length)+" publications sans impressions utilisables et "+fmt(posts.filter(p=>!p.format).length)+" sans format. L’évolution des abonnés dépend de la date réelle des relevés, en particulier pour les archives 2024–2025."]
     ];
     document.getElementById("analysis-insights").innerHTML=findings.map(([title,body])=>'<article class="insight-card"><h3>'+escapeHTML(title)+'</h3><p>'+escapeHTML(body)+'</p></article>').join("");
+    // Graphiques calculés uniquement à partir des données Notion déchiffrées.
+    const monthTotals = new Map();
+    for(const item of valid){
+      const month=item.date?.slice(0,7);
+      if(month)monthTotals.set(month,(monthTotals.get(month)||0)+Number(item.impressions));
+    }
+    const monthKeys = [...monthTotals.keys()].sort();
+    // Maintenir la lisibilité : derniers 24 mois actifs si la sélection est très longue.
+    const trendMonths = monthKeys.slice(-24);
+    const highestMonth=Math.max(1,...trendMonths.map(key=>monthTotals.get(key)));
+    document.getElementById("analysis-trend").innerHTML=trendMonths.length
+      ?trendMonths.map(key=>{
+        const value=monthTotals.get(key),height=Math.max(2,Math.round(100*value/highestMonth));
+        return '<div class="trend-col" title="'+escapeHTML(key)+' : '+fmt(value)+' impressions"><div class="trend-bar" style="--bar-height:'+height+'%"></div><span>'+escapeHTML(key.slice(2))+'</span></div>';
+      }).join("")
+      :'<p class="data-note">Pas d’impressions renseignées sur cette sélection.</p>';
+    const pagePerf=new Map();
+    for(const item of valid){
+      const key=normalizePage(item.page)||"Non renseignée";
+      if(!pagePerf.has(key))pagePerf.set(key,{sum:0,count:0});
+      const a=pagePerf.get(key);a.sum+=Number(item.impressions);a.count++;
+    }
+    const pageRanking=[...pagePerf.entries()].map(([name,values])=>({name,avg:values.sum/values.count,count:values.count}))
+      .sort((a,b)=>b.avg-a.avg);
+    const maxAvg=Math.max(1,...pageRanking.map(a=>a.avg));
+    document.getElementById("analysis-pages").innerHTML=pageRanking.length
+      ?pageRanking.map(a=>'<div class="bar-line" title="'+fmt(a.count)+' publication(s) renseignée(s)"><span>'+escapeHTML(a.name)+'</span><div class="bar-track"><div class="bar-fill" style="--bar-width:'+Math.round(100*a.avg/maxAvg)+'%"></div></div><strong>'+fmt(Math.round(a.avg))+'</strong></div>').join("")
+      :'<p class="data-note">Aucune moyenne par page calculable.</p>';
     const ranking = [...valid].sort((a,b)=>Number(b.impressions)-Number(a.impressions));
     const rankingList=document.getElementById("ranking-list");
     const top=document.getElementById("top-tab"),flop=document.getElementById("flop-tab");
